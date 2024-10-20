@@ -1,16 +1,18 @@
 import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
+import dotenv from "dotenv";
 
+dotenv.config();
 
 const app = express();
 const port = 3000;
 
 const db = new pg.Client({
-  user: "postgres",
-  host: "localhost",
-  database: "world",
-  password: "123456",
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
   port: 5432,
 });
 db.connect();
@@ -89,7 +91,7 @@ app.post("/add", async (req, res) => {
 });
 
 app.post("/user", async (req, res) => {
-console.log("Request body", req.body);
+// console.log("Request body", req.body);
 if (req.body.add === "new"){
   res.render("new.ejs");
 } else {
